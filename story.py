@@ -46,8 +46,7 @@ def leggi():
         save = open("salvataggi.txt", "r")
 
     except IOError:
-        str = codice
-        soldi = float(str)
+        soldi = 50.0
     
     finally:
         save.close()
