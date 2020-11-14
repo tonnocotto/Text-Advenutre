@@ -2,21 +2,14 @@ import time
 import random
 import sys,time,os
 
-soldi = 100.0
+soldi = 50.0
 nome_gioco = "24:00"
-prompt = "> "
+prompt = "> "0
 
 def invio(numero):
     separatore(numero)
     raw_input("premi invio per continuare\n" + prompt)
     separatore(numero)
-def conteggio(numero): 
-    numero = float(numero)
-    numero += 1
-    n = 1
-    while n < numero:
-        print n
-        n += 1
 def pausa(testo, tempo):
     testo = str(testo)
     print testo
@@ -45,23 +38,21 @@ def scelta():
 
 def salva(soldi):
     save = open("salvataggi.txt", "w")
-    save.write(str(soldi))    
+    save.write(str(soldi))
+
 def leggi():
     save = open("salvataggi.txt", "w")
     save = open("salvataggi.txt", "r")
+    
     codice = save.read()
     global soldi
     
     if codice == "":
-        soldi = 100.0
+        soldi = 50.0
     else:
         str = codice
         soldi = float(str)
 
-def casino():
-    pausa("Sei entrato nel casino'", 1.0)
-
-    
 def menu():
     separatore(30)
     print "\tMenu'"
@@ -254,32 +245,26 @@ def capitolo_1(): # non finito
                 pausa("Sei davanti all'edicola.", 1.0)
                 invio(30)
 
-            pausa ("scegli un'opzione\n[1] Chiedi delle informazioni\n[2] Compra il giornale\n[3] Indietro\n[4] Vai al menu'", 0.0)
+            pausa ("scegli un'opzione\n[1] Compra il giornale\n[2] Indietro\n[3] Vai al menu'", 0.0)
             separatore(30)
 
             opzione_0 = ""
 
-            while opzione_0 != "1" and opzione_0 != "2" and opzione_0 != "3" and opzione_0 != "4":
+            while opzione_0 != "1" and opzione_0 != "2" and opzione_0 != "3":
                 opzione_0 = raw_input(prompt)
                 opzione_0 = str(opzione_0)
 
             separatore(30)
                         
             if opzione_0 == "1":
-                pausa("Chiedi al giornalaio dove si trova la via sulla tua carta di identita'.", 1.7)
-                pausa("Il giornalaio dice di andare per 2 volte a ovest, poi a sud e infine ancora a ovest.", 2.0)
-                indizio = 1
-                invio(30)
-
-            if opzione_0 == "2":
                 loop = "giornalaio"
                 break
 
-            if opzione_0 == "3":
+            if opzione_0 == "2":
                 loop = 1
                 break
 
-            if opzione_0 == "4":
+            if opzione_0 == "3":
                 menu()
 
         while loop == "giornalaio":
@@ -306,9 +291,17 @@ def capitolo_1(): # non finito
                 else:
                     soldi =  soldi - 0.70
                     salva(soldi)
+                    
                     pausa("Hai comprato il giornale.", 1.0)
                     pausa("Ti rimangono %s euro." % soldi , 1.0)
+                    
+                    separatore(30)
+                    pausa("Sul giornale c'e' scritto:",1.0)
+                    animazione("Vai 2 volte ad ovest, a sud ed infine di nuovo ad ovest", 0.1)
                     invio(30)
+
+                    indizio = 1
+
                     loop = 2
                     break
 
@@ -429,7 +422,7 @@ def capitolo_1(): # non finito
                 pausa("Sei entrato nel viale.", 1.0)
                 pausa("A nord c'e' un viale.", 1.0)
                 pausa("A sud c'e' una statua.", 1.0)
-                pausa("A est c'e' una fontana.", 1.0)
+                pausa("A est c'e' un viale.", 1.0)
                 pausa("A ovest c'e' un viale.", 1.0)
                 invio(30)
 
@@ -445,10 +438,8 @@ def capitolo_1(): # non finito
                 invio(30)
 
             if opzione_6 == "3":
-                pausa("Sei davanti alla fontana.", 1.0)
-                pausa("Nessuno ti sta guardando.", 1.0)
-                pausa("Ne approfitti per dissetarti.", 1.0)
-                invio(30)
+                loop = 11
+                break
 
             if opzione_6 == "4":
                 loop = 5
@@ -608,6 +599,34 @@ def capitolo_1(): # non finito
 
             if opzione_10 == "3":
                 menu()
+
+        while loop == 11:
+            if loop == 11:
+                pausa("Sei entrato nel viale.", 1.0)
+                pausa("A nord c'e' un viale.", 1.0)
+                pausa("A sud c'e' una statua.",1.0)
+                pausa("A est c'e' un supermercato.", 1.0)
+                pausa("A ovest c'e' un viale", 1.0)
+                invio(30)
+            
+            opzione_12 = scelta()
+
+            if opzione_12 == "1":
+                pass
+
+            if opzione_12 == "2":
+                pass
+
+            if opzione_12 == "3":
+                pass
+
+            if opzione_12 == "4":
+                loop = 6
+                break
+
+            if opzione_12 == "5":
+                menu()
+            
 def capitolo_2():
     animazione("Capitolo 2 - Primi ed ultimi ricordi", 0.1)
     capitolo = 2
@@ -618,10 +637,10 @@ def capitolo_2():
 #menu()
 #invio(30)
 leggi()
-print "soldi:", soldi
-animazione("\n\nCapitolo 1 - La casa \n\n", 0.1) # cambiare nome
+print "soldi:", soldi, "euro"
+animazione("\nCapitolo 1 - La casa \n\n", 0.1) # cambiare nome
 separatore(30)
 
 capitolo_1()
 invio(30)
-capitolo_2() 
+capitolo_2()
