@@ -15,10 +15,10 @@ def pausa(testo, tempo):
     print testo
     tempo = float(tempo)
     time.sleep(tempo)
-def animazione(testo,tempo):
-    testo = str(testo)
+def animazione(testo, tempo):
+    testo = str(testo), "\n"
     tempo = float(tempo)
-    for char in testo:
+    for char in testo :
         sys.stdout.write(char)
         sys.stdout.flush()
         time.sleep(tempo)
@@ -54,51 +54,59 @@ def leggi():
         f.close()
 
 def menu():
-    separatore(30)
-    animazione ("\tMenu'", 0.1)
-    separatore(30)
+    loop = 0 
 
-    print "Scegli un'opzione\n[1] Gioca\n[2] Guida\n[3] Carica un capitolo\n[4] Statistiche"
-    separatore(30)
-
-    opzione = ""
-
-    while opzione != "1" and opzione != "2" and opzione != "3" and opzione != "4": #input validation  
-      opzione = str(raw_input(prompt))
-
-    separatore(30)
-
-    if opzione == "1":
-        intro()
+    while loop == 0:
         
-    if opzione == "2":
-        guida()
-    
-    if opzione == "3":
-        pausa("scegli il capitolo da caricare\n[1] Introduzione\n[2] Capitolo 1 - La casa\n[3] Capitolo 2 - Primi ed ultimi ricordi\n[4] Indietro",0.0)
+        separatore(30)
+        animazione ("\tMenu'", 0.1)
         separatore(30)
 
-        opzione_1 = ""
-        while opzione_1 != "1" and opzione_1 != "2" and opzione_1 != "3":
-            opzione_1 = str(raw_input(prompt))
-        
-        if opzione_1 == "2":
-            capitolo_1()
-            separatore(30)
+        print "Scegli un'opzione\n[1] Gioca\n[2] Guida\n[3] Carica un capitolo\n[4] Statistiche"
+        separatore(30)
 
-        if opzione_1 == "1":
+        opzione = ""
+
+        while opzione != "1" and opzione != "2" and opzione != "3" and opzione != "4": #input validation  
+            opzione = str(raw_input(prompt))
+
+        separatore(30)
+
+        if opzione == "1":
             intro()
+            
+        if opzione == "2":
+            guida()
+        
+        if opzione == "3":
+            pausa("scegli il capitolo da caricare\n[1] Introduzione\n[2] Capitolo 1 - La casa\n[3] Capitolo 2 - Primi ed ultimi ricordi\n[4] Indietro",0.0)
             separatore(30)
 
-        if opzione_1 == "3":
-            capitolo_2
-            separatore(30)
+            opzione_1 = ""
+            while opzione_1 != "1" and opzione_1 != "2" and opzione_1 != "3":
+                opzione_1 = str(raw_input(prompt))
+            
+            if opzione_1 == "2":
+                capitolo_1()
+                separatore(30)
+                break
 
-        if opzione_1 ==  "4":
-            menu()        
+            if opzione_1 == "1":
+                intro()
+                separatore(30)
+                break
 
-    if opzione == "4":
-        animazione("Statistiche\nSoldi: %s euro" % soldi, 0.1)
+            if opzione_1 == "3":
+                capitolo_2()
+                separatore(30)
+                break
+
+            if opzione_1 ==  "4":
+                continue   
+
+        if opzione == "4":
+            animazione("Statistiche\nSoldi: %s euro" % soldi, 0.1)
+            invio(30)
 def guida(): # non finito
     separatore(30)
     print "-" * 10 + " Regolamento " + "-" * 10
@@ -178,7 +186,7 @@ def capitolo_1(): # non finito
         
         while loop == "gelateria": # finito
             if loop == "gelateria":
-                pausa("Entri nella gelateria.", 1.5)
+                pausa("Sei entrato nella gelateria.", 1.5)
                 pausa("Hai %g euro." % soldi, 1.5)
                 pausa("Un gelato costa 2.50 euro.", 1.5)
                 invio(30)
@@ -272,7 +280,7 @@ def capitolo_1(): # non finito
             if opzione_0 == "3":
                 menu()
 
-        while loop == "giornalaio":
+        while loop == "giornalaio": #finito
             pausa("Hai %s euro." % soldi, 1.0)
             pausa("Il giornale costa 0.70 euro.", 1.0)
             pausa("Lo vuoi comprare?", 1.0)
@@ -302,7 +310,7 @@ def capitolo_1(): # non finito
                     
                     separatore(30)
                     pausa("Sul giornale c'e' scritto:",1.0)
-                    animazione("Vai 2 volte ad ovest,\n a sud ed infine di nuovo ad ovest\n", 0.1)
+                    animazione("Vai 2 volte ad ovest,\na sud ed infine di nuovo ad ovest", 0.1)
                     time.sleep(0.5)
                     invio(30)
 
@@ -324,16 +332,16 @@ def capitolo_1(): # non finito
             if loop == 3:
 
                 pausa("Sei entrato nel viale.", 1.0)
-                pausa("A nord c'e' un cantiere", 1.0)
-                pausa("A sud c'e' un viale", 1.0)
-                pausa("A est c'e' una piazza", 1.0)
-                pausa("A ovest c'e' un'altro vicolo.", 1.0)
+                pausa("A nord c'e' un cantiere.", 1.0)
+                pausa("A sud c'e' un viale.", 1.0)
+                pausa("A est c'e' una piazza.", 1.0)
+                pausa("A ovest c'e' un viale.", 1.0)
                 invio(30)
 
                 opzione_2 = scelta()
 
             if opzione_2 == "1":
-                pausa("Non c'e' nessun operaio", 1.0)
+                pausa("Non c'e' nessun operaio.", 1.0)
                 invio(30)
             
             if opzione_2 == "2":
@@ -412,15 +420,51 @@ def capitolo_1(): # non finito
                 break
 
             if opzione_5 == "4":
-                pausa("Sei davanti al negozio di vestiti.", 2.0)
-                pausa("I tuoi vestiti sono in perfette condizioni.", 2.0)
+                loop = "vestiti"
                 invio(30)
 
             if opzione_5 == "5":
                 big_loop = 1
                 menu()
                 break
+
+        while loop == "vestiti": # finito
+            if loop == "vestiti":
+                pausa("Sei entrato nel negozio di vestiti.", 1.0)
+                pausa("Hai %s euro." % soldi, 0.5)
+                pausa("Una maglietta costa 8.00 euro.", 1.0)
+                invio(30)
+
+            print "La vuoi comprare?\n[1] Si\n[2] No\n[3] Indietro\n[4] Menu'"
+
+            opzione_13 = ""
         
+            while opzione_13 != "1" and opzione_13 != "2" and opzione_13 != "3" and opzione_13 != "4":
+                opzione_13 = str(raw_input(prompt))
+            
+            if opzione_13 == "1":
+                
+                if soldi < 8.00:
+                    pausa("Non hai abbastanza soldi.")
+                    loop = 5
+                    invio(30)
+                    break
+                else:
+                    soldi = soldi - 8.00
+                    pausa("Hai comprato una maglietta.", 1.0)
+                    pausa("Ora hai %s euro" %s soldi , 1.0)
+                    loop = 5
+                    invio(30)
+                    break
+
+            if opzione_13 == "2" or opzione_13 == "3":
+                loop = 5
+                invio(30)
+                break
+
+            if opzione_13 == "4":
+                menu()
+
         while loop == 6: # finito
             
             if loop == 6:
@@ -477,7 +521,7 @@ def capitolo_1(): # non finito
                     invio(30)
 
                 if opzione_7 == "3":
-                    pausa("Entri nel panificio.", 1.0)
+                    pausa("Sei entrato nel panificio.", 1.0)
                     pausa("Compri una focaccia la mangi fuori dalla panetteria.", 1.5)
                     invio(30)
 
@@ -516,7 +560,7 @@ def capitolo_1(): # non finito
                 break
             
             if opzione_8 == "4":
-                pausa("Entri in libreria.", 1.0)
+                pausa("Sei entrato in libreria.", 1.0)
                 pausa("Compri un libro e vai via.", 1.0)
                 invio(30)
 
@@ -631,8 +675,7 @@ def capitolo_1(): # non finito
                 break
 
             if opzione_12 == "5":
-                menu()
-            
+                menu()           
 def capitolo_2():
     animazione("Capitolo 2 - Primi ed ultimi ricordi", 0.1)
     capitolo = 2
