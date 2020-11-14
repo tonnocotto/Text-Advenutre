@@ -4,7 +4,7 @@ import sys,time,os
 
 soldi = 50.0
 nome_gioco = "24:00"
-prompt = "> "0
+prompt = "> "
 
 def invio(numero):
     separatore(numero)
@@ -37,13 +37,21 @@ def scelta():
     return opzione       
 
 def salva(soldi):
+
     save = open("salvataggi.txt", "w")
     save.write(str(soldi))
 
 def leggi():
-    save = open("salvataggi.txt", "w")
-    save = open("salvataggi.txt", "r")
+    try:
+        save = open("salvataggi.txt", "r")
+
+    except IOError:
+        str = codice
+        soldi = float(str)
     
+    finally:
+        save.close()
+
     codice = save.read()
     global soldi
     
