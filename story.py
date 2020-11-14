@@ -47,6 +47,7 @@ def salva(soldi):
     save = open("salvataggi.txt", "w")
     save.write(str(soldi))    
 def leggi():
+    save = open("salvataggi.txt", "w")
     save = open("salvataggi.txt", "r")
     codice = save.read()
     global soldi
