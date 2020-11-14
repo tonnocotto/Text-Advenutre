@@ -42,23 +42,21 @@ def salva(soldi):
     save.write(str(soldi))
 
 def leggi():
+    global soldi
     try:
         save = open("salvataggi.txt", "r")
-
+        codice = save.read()
+    
     except IOError:
-        soldi = 50.0
+        50.0
     
     finally:
         save.close()
 
-    codice = save.read()
-    global soldi
-    
     if codice == "":
         soldi = 50.0
     else:
-        str = codice
-        soldi = float(str)
+        soldi = float(codice)
 
 def menu():
     separatore(30)
