@@ -35,6 +35,31 @@ def scelta():
 
     separatore(30)
     return opzione       
+def scambio():
+    loop = 0
+  
+    while loop == 0:
+        if loop == 0:
+            pausa("Parli con il signore sulla panchina.", 1.5)
+            pausa("Sembra una persona benestante", 1.0)
+            pausa("Dice che ha da qualche anno una grave malattia alle gambe e che ormai non puo' piu' utilizzarle.", 2.5)
+            pausa("Gli rimane sono un mese di vita.", 1.0)
+            pausa("Vorrebbe visitare la citta' in cui e' nato un'ultima volta prima di morire.", 2.5)
+            pausa("Ma dato che tutto cio' non e' possibile si accontenterebbe anche di delle foto.", 2.5)
+            pausa("Ti chiede se lo vuoi aiutare e scattare quelle foto per lui.", 2.0)
+
+        print "Scelgi un'opzione\n[1] Accetta l'incarico\n[2] Rifiuta\n[3] Indietro\n[4] Menu'"
+
+        opzione = ""
+        
+        while opzione != "1" and opzione != "2" and opzione != "3" and opzione != "4":
+            opzione = str(raw_input(prompt))
+
+        if opzione == "1":
+            pausa("Ti dice che e' disposto a pagarti molto.", 1.0)
+            pausa("Ti dice che per ora vuole che gli porti 4 foto.", 1.5)
+            pausa("La prima foto deve essere quella di una fontana.", 1.5)
+            pausa("La seconda foto deve essere quella di una statua dedicata ai caduti in guerra", 2.0)
 
 def salva(soldi):
     save = open("salvataggi.txt", "w")
