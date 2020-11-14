@@ -37,44 +37,36 @@ def scelta():
     return opzione       
 
 def salva(soldi):
-
     save = open("salvataggi.txt", "w")
     save.write(str(soldi))
-
 def leggi():
     global soldi
     try:
-        save = open("salvataggi.txt", "r")
-        codice = save.read()
-    
+        f = open("salvataggi.txt", "r")
+        codice = f.read()
+        if codice == "":
+          soldi = 50.0
+        else:
+          soldi = float(codice)
     except IOError:
-        50.0
-    
-    finally:
-        save.close()
-
-    if codice == "":
         soldi = 50.0
-    else:
-        soldi = float(codice)
+    finally:
+        f.close()
 
 def menu():
     separatore(30)
-    print "\tMenu'"
+    animazione ("\tMenu'", 0.1)
     separatore(30)
 
-    print "Scegli un'opzione\n[1] Gioca\n[2] Guida\n[3] Carica un capitolo"
+    print "Scegli un'opzione\n[1] Gioca\n[2] Guida\n[3] Carica un capitolo\n[4] Statistiche"
     separatore(30)
 
     opzione = ""
 
-    while opzione != "1" and opzione != "2" and opzione != "3": #input validation  
-      opzione = (raw_input(prompt))
-      opzione = str(opzione)
+    while opzione != "1" and opzione != "2" and opzione != "3" and opzione != "4": #input validation  
+      opzione = str(raw_input(prompt))
 
     separatore(30)
-
-    opzione = int(opzione)
 
     if opzione == "1":
         intro()
@@ -83,7 +75,7 @@ def menu():
         guida()
     
     if opzione == "3":
-        pausa("scegli il capitolo da caricare\n[1] Introduzione\n[2] Capitolo 1 - La casa\n[3] Capitolo 2 - Primi ed ultimi ricordi\n[4]Indietro",0.0)
+        pausa("scegli il capitolo da caricare\n[1] Introduzione\n[2] Capitolo 1 - La casa\n[3] Capitolo 2 - Primi ed ultimi ricordi\n[4] Indietro",0.0)
         separatore(30)
 
         opzione_1 = ""
@@ -104,6 +96,9 @@ def menu():
 
         if opzione_1 ==  "4":
             menu()        
+
+    if opzione == "4":
+        animazione("Statistiche\nSoldi: %s euro" % soldi, 0.1)
 def guida(): # non finito
     separatore(30)
     print "-" * 10 + " Regolamento " + "-" * 10
@@ -120,23 +115,28 @@ def guida(): # non finito
     separatore(30)
     opzione = raw_input( prompt)
 def intro(): # non finito
-    pausa("E' tardo pomeriggio e ti trovi in una citta' chiamata Morio-cho.", 3.0) #cambiare il nome della citta'
+    pausa("E' tardo pomeriggio e ti trovi in una piccola citta' chiamata Morio-cho.", 2.5) #cambiare il nome della citta'
     pausa("Nessun abitante sembra conoscerti.", 2.0)
-    pausa("Non ricordi nulla sul tuo passato.", 3.0) #ho scritto questo per non dare un background al personaggio
-    pausa("L'unico ricordo che hai e' quello di star tornando a casa dopo una lunga giornata.", 3.0)
-    pausa("Dato che hai completamente perso la memoria decidi di cercare casa tua nel tentativo di recuperare qualche ricordo.", 4.5) 
-    pausa("Aprendo il portafogli trovi una carta d'identita' strappata a meta' e rovinata.", 4.5) 
-    pausa("Si riescono malapena a leggere la via ed alcune delle tue caratteristiche fisiche.", 4.0) 
+    pausa("Non ricordi nulla sul tuo passato.", 2.0) #ho scritto questo per non dare un background al personaggio
+    pausa("L'unico ricordo che hai e' quello di star tornando a casa dopo una lunga giornata.", 2.5)
+    pausa("Dato che hai completamente perso la memoria decidi di cercare casa tua nel tentativo di recuperare qualche ricordo.", 3.5) 
+    pausa("Aprendo il portafogli trovi una carta d'identita' strappata a meta' e rovinata.", 2.5) 
+    pausa("Si riesce malapena a leggere la via ed alcune delle tue caratteristiche fisiche.", 3.0) 
     separatore(30)
     animazione("Via = Le Mani dal Naso\n\nCONNOTATI E CONTRASSEGNI SALIENTI\n\nStatura : 190cm\nCapelli : biondi\nOcchi : azzurri\n", 0.1) # cambiare nome alla via
     separatore(30)
-    pausa("Non sai dove si trovi la via.", 3.0)
+    time.sleep(1.5)
+    pausa("Non sai dove si trovi la via.", 1.0)
+    invio(30)
 def capitolo_1(): # non finito
     global soldi
     cap = 1 
     loop = 0
     big_loop = 0
     indizio = 0
+
+    animazione("\nCapitolo 1 - La casa \n\n", 0.1) # cambiare nome
+    separatore(30)
 
     while big_loop == 0:
         
@@ -302,7 +302,8 @@ def capitolo_1(): # non finito
                     
                     separatore(30)
                     pausa("Sul giornale c'e' scritto:",1.0)
-                    animazione("Vai 2 volte ad ovest, a sud ed infine di nuovo ad ovest", 0.1)
+                    animazione("Vai 2 volte ad ovest,\n a sud ed infine di nuovo ad ovest\n", 0.1)
+                    time.sleep(0.5)
                     invio(30)
 
                     indizio = 1
@@ -639,12 +640,9 @@ def capitolo_2():
     big_loop = 0
     indizio = 0
 
-#menu()
-#invio(30)
 leggi()
-print "soldi:", soldi, "euro"
-animazione("\nCapitolo 1 - La casa \n\n", 0.1) # cambiare nome
-separatore(30)
+menu()
+#invio(30)
 
 capitolo_1()
 invio(30)
