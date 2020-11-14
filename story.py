@@ -1,28 +1,11 @@
 import time
 import random
 import sys,time,os
-import sqlite3
-
 
 soldi = 100.0
 nome_gioco = "24:00"
 prompt = "> "
 
-
-class Stats:
-    def __init__(self, capitolo, stanza, soldi, indizio):
-        self.capitolo = capitolo
-        self.stanza = stanza
-        self.soldi = soldi
-        self.indizio = indizio
-
-    def codice(self):
-        code = self.capitolo, self.stanza
-
-    def salva(self):
-        save = open("salvataggi.txt", "w")
-        save.write()
-        save.close
 def invio(numero):
     separatore(numero)
     raw_input("premi invio per continuare\n" + prompt)
@@ -60,7 +43,24 @@ def scelta():
     separatore(30)
     return opzione       
 
+def salva(soldi):
+    save = open("salvataggi.txt", "w")
+    save.write(str(soldi))    
+def leggi():
+    save = open("salvataggi.txt", "r")
+    codice = save.read()
+    global soldi
+    
+    if codice == "":
+        soldi = 100.0
+    else:
+        str = codice
+        soldi = float(str)
 
+def casino():
+    pausa("Sei entrato nel casino'", 1.0)
+
+    
 def menu():
     separatore(30)
     print "\tMenu'"
@@ -136,6 +136,7 @@ def intro(): # non finito
     pausa("Non sai dove si trovi la via.", 3.0)
 def capitolo_1(): # non finito
     global soldi
+    cap = 1 
     loop = 0
     big_loop = 0
     indizio = 0
@@ -194,20 +195,21 @@ def capitolo_1(): # non finito
 
             if opzione_11 == "1":
                 if soldi < 2.50:
-                    pausa("Non hai abbastanza soldi.")
+                    pausa("Non hai abbastanza soldi.", 1.0)
                     loop = 0
                     invio(30)
                     break
                 else:
-                    pausa("Mangi il gelato ed esci dalla gelateria")
+                    pausa("Mangi il gelato ed esci dalla gelateria", 1.0)
                     soldi = soldi - 2.50
+                    salva(soldi)
                     pausa("Ora hai %g euro." % soldi, 1.0)
                     invio(30)
                     loop = 0
                     break
 
             if opzione_11 == "2" or opzione_11 == "3":
-                pausa("Esci dalla gelateria.")
+                pausa("Esci dalla gelateria.",1.0)
                 invio(30)
                 loop = 0
                 break
@@ -301,6 +303,8 @@ def capitolo_1(): # non finito
                     loop = 2 
                     break
                 else:
+                    soldi =  soldi - 0.70
+                    salva(soldi)
                     pausa("Hai comprato il giornale.", 1.0)
                     pausa("Ti rimangono %s euro." % soldi , 1.0)
                     invio(30)
@@ -471,12 +475,12 @@ def capitolo_1(): # non finito
                     invio(30)
 
                 if opzione_7 == "2":
-                    pausa("Il proprietario e' maleducato.")
+                    pausa("Il proprietario e' maleducato.", 1.0)
                     invio(30)
 
                 if opzione_7 == "3":
                     pausa("Entri nel panificio.", 1.0)
-                    pausa("Compri una focaccia la mangi fuori dalla panetteria.")
+                    pausa("Compri una focaccia la mangi fuori dalla panetteria.", 1.5)
                     invio(30)
 
                 if opzione_7 == "4":
@@ -605,13 +609,15 @@ def capitolo_1(): # non finito
                 menu()
 def capitolo_2():
     animazione("Capitolo 2 - Primi ed ultimi ricordi", 0.1)
+    capitolo = 2
     Loop = 0
     big_loop = 0
-    egg = 0
+    indizio = 0
 
 #menu()
 #invio(30)
-
+leggi()
+print "soldi:", soldi
 animazione("\n\nCapitolo 1 - La casa \n\n", 0.1) # cambiare nome
 separatore(30)
 
