@@ -2,9 +2,13 @@ import time
 import random
 import sys,time,os
 
+global Loop_1 
+
+loop_1 = 0
 soldi = 50.0
 nome_gioco = "24:00"
 prompt = "> "
+
 
 def invio(numero):
     separatore(numero)
@@ -64,6 +68,20 @@ def scambio():
             pausa("La prima foto deve essere quella di una fontana.", 1.5)
             pausa("La seconda foto deve essere quella di una statua dedicata ai caduti in guerra.", 2.0)
             pausa("La terza %s")
+def continua(numero):
+    separatore(numero)
+    print "Vuoi continuare?\n[1] Si\n[2] No"
+    separatore(numero)
+    risposta = ""
+    while risposta != "1" and risposta != "2":    
+        risposta = raw_input(prompt)
+
+    if risposta == "1":
+        loop_1 += 1
+    else:
+        menu()
+        
+    separatore(numero)
 
 def salva(soldi):
     save = open("salvataggi.txt", "w")
@@ -81,6 +99,7 @@ def leggi():
         soldi = 50.0
     finally:
         f.close()
+
 def menu():
     loop = 0 
 
@@ -151,19 +170,19 @@ def guida(): # non finito
     separatore(30)
     opzione = raw_input( prompt)
 def intro(): # non finito
-    pausa("E' tardo pomeriggio e ti trovi in una piccola citta' chiamata Morio-cho.", 2.5) #cambiare il nome della citta'
+    pausa("E' tardo pomeriggio e ti trovi in una piccola citta' chiamata Morio-cho.", 2.7) #cambiare il nome della citta'
     pausa("Nessun abitante sembra conoscerti.", 2.0)
     pausa("Non ricordi nulla sul tuo passato.", 2.0) #ho scritto questo per non dare un background al personaggio
-    pausa("L'unico ricordo che hai e' quello di star tornando a casa dopo una lunga giornata.", 2.5)
-    pausa("Dato che hai completamente perso la memoria decidi di cercare casa tua nel tentativo di recuperare qualche ricordo.", 3.5) 
-    pausa("Aprendo il portafogli trovi una carta d'identita' strappata a meta' e rovinata.", 2.5) 
-    pausa("Si riesce malapena a leggere la via ed alcune delle tue caratteristiche fisiche.", 3.0) 
-    separatore(30)
-    animazione("Via = Le Mani dal Naso\n\nCONNOTATI E CONTRASSEGNI SALIENTI\n\nStatura : 190cm\nCapelli : biondi\nOcchi : azzurri\n", 0.1) # cambiare nome alla via
+    pausa("L'unico ricordo che hai e' quello di star tornando a casa dopo una lunga giornata.", 3.0)
+    pausa("Dato che hai completamente perso la memoria decidi di cercare casa tua nel tentativo di recuperare qualche ricordo.", 4.0) 
+    pausa("Aprendo il portafogli trovi una carta d'identita' strappata a meta' e rovinata.", 3.5) 
+    pausa("Si riesce malapena a leggere la via ed alcune delle tue caratteristiche fisiche.", 3.5) 
+    invio(30)
+    animazione("Via = Le Mani dal Naso\n\nCONNOTATI E CONTRASSEGNI SALIENTI\n\nStatura : 190cm\nCapelli : biondi\nOcchi : azzurri", 0.1) # cambiare nome alla via
     separatore(30)
     time.sleep(1.5)
     pausa("Non sai dove si trovi la via.", 1.0)
-    invio(30)
+    continua(30)
 def capitolo_1(): # non finito
     global soldi
     cap = 1 
@@ -711,10 +730,12 @@ def capitolo_2(): # non finito
     big_loop = 0
     indizio = 0
 
-leggi()
-menu()
-#invio(30)
 
-capitolo_1()
-invio(30)
-capitolo_2()
+leggi()
+
+while loop_1 == 0:
+    menu()
+while loop_1 == 1:
+    capitolo_1()
+while loop_1 == 2:
+    capitolo_2()
