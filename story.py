@@ -81,14 +81,13 @@ def leggi():
         soldi = 50.0
     finally:
         f.close()
-
 def menu():
     loop = 0 
 
     while loop == 0:
         
         separatore(30)
-        animazione ("\tMenu'", 0.1)
+        print "\tMenu'"
         separatore(30)
 
         print "Scegli un'opzione\n[1] Gioca\n[2] Guida\n[3] Carica un capitolo\n[4] Statistiche"
@@ -481,7 +480,7 @@ def capitolo_1(): # non finito
                 else:
                     soldi = soldi - 8.00
                     pausa("Hai comprato una maglietta.", 1.0)
-                    pausa("Ora hai %s euro" %s soldi , 1.0)
+                    pausa("Ora hai %s euro" % soldi , 1.0)
                     loop = 5
                     invio(30)
                     break
