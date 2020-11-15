@@ -37,7 +37,10 @@ def scelta():
     return opzione       
 def scambio():
     loop = 0
-  
+    chiesa = "chiesa"
+    statua = "statua dedicata ai caduti in guerra"
+    fontana = "fontana"
+     
     while loop == 0:
         if loop == 0:
             pausa("Parli con il signore sulla panchina.", 1.5)
@@ -57,9 +60,10 @@ def scambio():
 
         if opzione == "1":
             pausa("Ti dice che e' disposto a pagarti molto.", 1.0)
-            pausa("Ti dice che per ora vuole che gli porti 4 foto.", 1.5)
+            pausa("Per ora vuole che gli porti 4 foto.", 1.5)
             pausa("La prima foto deve essere quella di una fontana.", 1.5)
-            pausa("La seconda foto deve essere quella di una statua dedicata ai caduti in guerra", 2.0)
+            pausa("La seconda foto deve essere quella di una statua dedicata ai caduti in guerra.", 2.0)
+            pausa("La terza %s")
 
 def salva(soldi):
     save = open("salvataggi.txt", "w")
@@ -701,7 +705,7 @@ def capitolo_1(): # non finito
 
             if opzione_12 == "5":
                 menu()           
-def capitolo_2():
+def capitolo_2(): # non finito
     animazione("Capitolo 2 - Primi ed ultimi ricordi", 0.1)
     capitolo = 2
     Loop = 0
