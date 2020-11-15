@@ -19,13 +19,13 @@ def pausa(testo, tempo):
     print testo
     tempo = float(tempo)
     time.sleep(tempo)
-def animazione(testo, tempo):
-    testo = str(testo), "\n"
-    tempo = float(tempo)
-    for char in testo :
+def animazione(testo,tempo):
+    for char in testo:
         sys.stdout.write(char)
         sys.stdout.flush()
         time.sleep(tempo)
+
+    print ""
 def separatore(numero):
     print "=" * numero
 def scelta():
@@ -106,8 +106,8 @@ def menu():
     while loop == 0:
         
         separatore(30)
-        print "\tMenu'"
-        separatore(30)
+        animazione("\tMenu'", 0.1)
+        separatore(30) 
 
         print "Scegli un'opzione\n[1] Gioca\n[2] Guida\n[3] Carica un capitolo\n[4] Statistiche"
         separatore(30)
@@ -152,8 +152,9 @@ def menu():
                 continue   
 
         if opzione == "4":
-            animazione("Statistiche\nSoldi: %s euro" % soldi, 0.1)
+            print "Statistiche\nSoldi: %s euro" % soldi
             invio(30)
+            time.sleep(2.0)
 def guida(): # non finito
     separatore(30)
     print "-" * 10 + " Regolamento " + "-" * 10
@@ -190,7 +191,8 @@ def capitolo_1(): # non finito
     big_loop = 0
     indizio = 0
 
-    animazione("\nCapitolo 1 - La casa \n\n", 0.1) # cambiare nome
+    separatore(30)
+    animazione("\nCapitolo 1 - La casa \n", 0.1) # cambiare nome
     separatore(30)
 
     while big_loop == 0:
@@ -668,7 +670,7 @@ def capitolo_1(): # non finito
                 nome = raw_input("A quanto pare ti chiami:\n" + prompt)
 
                 separatore(30)
-                animazione("FINE CAPITOLO 1", 1.0)
+                animazione("FINE CAPITOLO 1", 0.1)
                 invio(30)
 
                 print "scegli un'opzione\n[1] Prossimo capitolo\n[2] Ripeti capitolo 1\n[3] Vai al menu'"
