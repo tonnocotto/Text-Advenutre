@@ -78,9 +78,12 @@ def scambio():
 
     while loop == 1:
         if loop == 1:
-            
-            pausa("Per ora vuole che gli porti una sola foto.", 1.5)
+            pausa("Vuole che gli porti una sola foto.", 1.5)
             pausa("La foto deve essere quella di %s." % obbiettivo, 1.5)
+
+    while loop == 2:
+        if loop == 2:
+            pausa("Scegli un'opzione\n[1] Consegna foto")
 def continua(numero, n):
     global loop_1
     loop_1 = n
@@ -97,6 +100,15 @@ def continua(numero, n):
     if risposta == "2":
         menu()       
 
+def salva(soldi, foto):
+    try:
+        with open("salvataggi.txt"):
+            with open("salvataggi.txt ", "a") as score:
+                score.write(soldi,"\n", foto)
+
+    except IOError:
+        with open("salvataggi.txt", "w") as score:
+            score.write(soldi, "\n", foto)
 def leggi():
     global soldi, foto
     try:
@@ -116,15 +128,7 @@ def leggi():
         foto = 0
     finally:
         f.close()
-def salva(soldi, foto):
-    try:
-        with open("salvataggi.txt"):
-            with open("salvataggi.txt ", "a") as score:
-                score.write(soldi,"\n", foto)
 
-    except IOError:
-        with open("salvataggi.txt", "w") as score:
-            score.write(soldi, "\n", foto)
 
 def menu():
     loop = 0 
@@ -226,7 +230,7 @@ def intro(): # non finito
     continua(30, 1)
 def capitolo_1(): # non finito
     global soldi
-    cap = 1 
+    cap = 1
     loop = 0
     big_loop = 0
     indizio = 0
@@ -250,6 +254,10 @@ def capitolo_1(): # non finito
             opzione = scelta()
 
             if opzione == "1": # finito
+                if foto == 1:
+                    loop = "chiesa"
+                    break
+
                 pausa("Sei entrato in chiesa.", 1.0)
                 pausa("Ci sono delle persone che pregano.",1.0)
                 invio(30)
@@ -273,6 +281,39 @@ def capitolo_1(): # non finito
                 menu()
                 break
         
+        while loop == "chiesa": # finito
+            if loop == "chiesa":
+                pausa("Sei davanti alla chiesa.", 1.0)
+
+            separatore(30)
+            print "scegli un'opzione\n[1] Entra\n[2] Scatta una foto\n[3] Indietro\n[4] Menu'"
+            
+            opzione_14 = ""
+
+            while opzione_14 != "1" and opzione_14 != "2" and opzione_14 != "3" and opzione_14 != "4":
+                opzione_14 = raw_input(prompt)
+
+            separatore(30)
+
+            if opzione == "1":
+                pausa("Sei entrato in chiesa.", 1.0)
+                pausa("Ci sono delle persone che pregano.", 1.0)
+                invio(30)
+            
+            if opzione == "2":
+                pausa("Hai scattato la foto.", 1.0)
+                foto = "1"
+                salva(soldi, foto)
+                invio(30)
+
+            if opzione == "3":
+                loop = 0
+                break
+
+            if opzione == "4":
+                menu()
+                break
+
         while loop == "gelateria": # finito
             if loop == "gelateria":
                 pausa("Sei entrato nella gelateria.", 1.5)
