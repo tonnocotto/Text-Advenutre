@@ -10,7 +10,6 @@ soldi = 50.0
 nome_gioco = "24:00"
 prompt = "> "
 
-
 def invio(numero):
     separatore(numero)
     raw_input("premi invio per continuare\n" + prompt)
@@ -41,11 +40,20 @@ def scelta():
     separatore(30)
     return opzione       
 def scambio():
-    loop = 0
-    chiesa = "chiesa"
-    statua = "statua dedicata ai caduti in guerra"
-    fontana = "fontana"
-     
+
+    if foto == 0:
+        loop = 0
+    else:
+        loop = 2
+
+    if foto == 1:
+        obbiettivo = "una chiesa"
+    if foto == 2:
+        obbiettivo = "una statua dedicata ai caduti in guerra"
+    if foto == 3:
+        obbiettivo = "una fontana"
+
+
     while loop == 0:
         if loop == 0:
             pausa("Parli con il signore sulla panchina.", 1.5)
@@ -65,10 +73,14 @@ def scambio():
 
         if opzione == "1":
             pausa("Ti dice che e' disposto a pagarti molto.", 1.0)
-            pausa("Per ora vuole che gli porti 4 foto.", 1.5)
-            pausa("La prima foto deve essere quella di una fontana.", 1.5)
-            pausa("La seconda foto deve essere quella di una statua dedicata ai caduti in guerra.", 2.0)
-            pausa("La terza %s")
+            loop = 1
+            break
+
+    while loop == 1:
+        if loop == 1:
+            
+            pausa("Per ora vuole che gli porti una sola foto.", 1.5)
+            pausa("La foto deve essere quella di %s." % obbiettivo, 1.5)
 def continua(numero, n):
     global loop_1
     loop_1 = n
@@ -169,7 +181,7 @@ def menu():
 
             if opzione_1 == "1":
                 loop_1 = 1
-                
+
                 break
 
             if opzione_1 == "3":
@@ -179,7 +191,6 @@ def menu():
             if opzione_1 ==  "4":
                 loop = 0
                 break   
-
 def guida(): # non finito
     separatore(30)
     print "-" * 10 + " Regolamento " + "-" * 10
@@ -768,8 +779,6 @@ while loop_1 == 0:
     menu()    
     if loop_1 != 0:
         break    
-
-
 while loop_1 == 1:
     if loop_1 != 1:
         break
