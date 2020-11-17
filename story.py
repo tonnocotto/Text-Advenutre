@@ -5,8 +5,10 @@ import sys,time,os
 global Loop_1 
 
 foto = 0
+n_foto = 0
 loop_1 = 0
 soldi = 50.0
+big_loop_1 = 0
 nome_gioco = "24:00"
 prompt = "> "
 
@@ -83,7 +85,17 @@ def scambio():
 
     while loop == 2:
         if loop == 2:
-            pausa("Scegli un'opzione\n[1] Consegna foto")
+            pausa("Parli con il signore sulla panchina")
+        print "Scegli un'opzione\n[1] Consegna foto\n[2] Indietro\n[3] Menu'"
+
+        opzione_1 = ""
+
+        while opzione_1 != "1" and opzione_1 != "2" and opzione_1 != "3":
+            opzione_1 = raw_input(prompt)
+
+        if opzione_1 == "1":
+            pausa("Consegni %s foto." % foto , 1.0)
+
 def continua(numero, n):
     global loop_1
     loop_1 = n
@@ -100,44 +112,63 @@ def continua(numero, n):
     if risposta == "2":
         menu()       
 
-def salva(soldi, foto):
+def salva(soldi, foto, n_foto, indizio):
     try:
         with open("salvataggi.txt"):
             with open("salvataggi.txt ", "a") as score:
-                score.write(soldi,"\n", foto)
+                score.write(soldi,"\n", foto, "\n", n_foto, "\n", indizio)
 
     except IOError:
         with open("salvataggi.txt", "w") as score:
-            score.write(soldi, "\n", foto)
+            score.write(soldi,"\n", foto, "\n", n_foto, "\n", indizio)
 def leggi():
-    global soldi, foto
+    global soldi, foto, indizio, n_foto
     try:
         f = open("salvataggi.txt", "r")
-        s = f.readline(1)
-        p = f.readline(2)
-        if p == "":
+        soldi_1 = f.readline(1)
+        foto_1 = f.readline(2)
+        n_foto_1 = f.readline(3)
+        indizio_1 = f.readline(4)
+
+        if foto_1 == "":
             foto = 0
-        elif s == "":
+
+        elif soldi_1 == "":
             soldi = 50.0
+
+        elif n_foto_1 == "":
+            n_foto = 0
+
+        elif indizio_1 == "":
+            indizio = 0
         else:
-            soldi = float(s)
-            foto = float(p)
+            soldi = float(soldi_1)
+            foto = float(foto_1)
+            n_foto = float(n_foto_1)
+            indizio = float(indizio_1)
+
 
     except IOError:
         soldi = 50.0
         foto = 0
+        indizio = 0
+        n_foto = 0
     finally:
         f.close()
 
-
 def menu():
+    global loop_1
     loop = 0 
     big_loop = 0
 
-    while big_loop == 0:
-        
+    while big_loop == 0:    
+        if big_loop != 0:
+            break
+
         while loop == 0:
-            
+            if loop != 0:
+                break
+
             separatore(30)
             animazione("\n\tMenu'\n", 0.1)
             separatore(30) 
@@ -167,34 +198,42 @@ def menu():
 
             if opzione == "4":
                 print "Statistiche\nSoldi: %s euro" % soldi
+                
+                if foto != 0:
+                    print "Foto: %s" % foto
+
                 invio(30)
                 time.sleep(2.0)     
 
         while loop == 1:
+            if loop != 1:
+                break
 
             pausa("scegli il capitolo da caricare\n[1] Introduzione\n[2] Capitolo 1\n[3] Capitolo 2\n[4] Indietro",0.0)
             separatore(30)
 
             opzione_1 = ""
-            while opzione_1 != "1" and opzione_1 != "2" and opzione_1 != "3":
+            while opzione_1 != "1" and opzione_1 != "2" and opzione_1 != "3" and opzione_1 != "4":
                 opzione_1 = str(raw_input(prompt))
             
             if opzione_1 == "2":
                 loop_1 = 2
+                big_loop = 1
                 break
 
             if opzione_1 == "1":
                 loop_1 = 1
-
+                big_loop = 1
                 break
-
+                
             if opzione_1 == "3":
                 loop_1 = 3
+                big_loop = 1
                 break
-
+        
             if opzione_1 ==  "4":
                 loop = 0
-                break   
+                break
 def guida(): # non finito
     separatore(30)
     print "-" * 10 + " Regolamento " + "-" * 10
@@ -302,7 +341,7 @@ def capitolo_1(): # non finito
             
             if opzione == "2":
                 pausa("Hai scattato la foto.", 1.0)
-                foto = "1"
+                n_foto = 1
                 salva(soldi, foto)
                 invio(30)
 
@@ -792,7 +831,8 @@ def capitolo_1(): # non finito
             opzione_12 = scelta()
 
             if opzione_12 == "1":
-                pass
+                loop = 12
+                break
 
             if opzione_12 == "2":
                 pass
@@ -805,7 +845,13 @@ def capitolo_1(): # non finito
                 break
 
             if opzione_12 == "5":
-                menu()           
+                menu()
+
+        while loop == 12:
+            if loop == 12:
+                pausa("Sei entrato nel viale.", 1.0)
+                pausa("A nord c'e' un signore anziano seduto su una panchina.", 2.0)   
+                pausa("A sud c'e' un viale", 1.0)
 def capitolo_2(): # non finito
     animazione("Capitolo 2 - Primi ed ultimi ricordi", 0.1)
     capitolo = 2
@@ -813,13 +859,12 @@ def capitolo_2(): # non finito
     big_loop = 0
     indizio = 0
 
-
 leggi()
 
 while loop_1 == 0:
-    menu()    
     if loop_1 != 0:
-        break    
+        break        
+    menu()    
 while loop_1 == 1:
     if loop_1 != 1:
         break
