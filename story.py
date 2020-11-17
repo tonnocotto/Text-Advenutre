@@ -119,6 +119,9 @@ def scatta():
             invio(30)
             continue
 
+        if opzione == "3":
+            menu()
+
     return opzione
 def continua(numero, n):
     global loop_1
@@ -862,7 +865,10 @@ def capitolo_1(): # non finito
                 pausa("Sei davanti alla statua.", 1.0)
                 pausa("E' dedicata ad uno scrittore morto da tempo.", 1.5)
                 if foto == 4:
-                    print "Scegli un'opzione\n[1] Scatta foto"
+                    scatta()
+
+                    if scatta == "2":
+                        continue
 
             if opzione_12 == "3":
                 pass
