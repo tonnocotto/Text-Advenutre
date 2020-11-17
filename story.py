@@ -54,6 +54,8 @@ def scambio():
         obbiettivo = "una statua dedicata ai caduti in guerra"
     if foto == 3:
         obbiettivo = "una fontana"
+    if foto == 4:
+        obbiettivo = "una statua dedicata ad uno scrittore"
 
 
     while loop == 0:
@@ -95,7 +97,29 @@ def scambio():
 
         if opzione_1 == "1":
             pausa("Consegni %s foto." % foto , 1.0)
+def scatta():
+    loop = 0
+    scatto = 1
+    while loop == 0:
 
+        print "Scegli un'opzione\n[1] Scatta foto\n[2] Indietro\n[3] Menu'"
+
+        opzione = ""
+
+        while opzione != "1" and opzione != "2" and opzione != "3":
+            opzione = raw_input(prompt) 
+
+        if opzione == "1":
+            if scatto != "1":
+                print "Hai già scattato una foto in questo luogo."
+            else:
+                pausa("Hai scattato la foto.", 1.0)
+                n_foto += 1
+                salva(soldi, foto, n_foto, indizio)
+            invio(30)
+            continue
+
+    return opzione
 def continua(numero, n):
     global loop_1
     loop_1 = n
@@ -341,8 +365,8 @@ def capitolo_1(): # non finito
             
             if opzione == "2":
                 pausa("Hai scattato la foto.", 1.0)
-                n_foto = 1
-                salva(soldi, foto)
+                n_foto += 1
+                salva(soldi, foto, n_foto, indizio)
                 invio(30)
 
             if opzione == "3":
@@ -376,7 +400,7 @@ def capitolo_1(): # non finito
                 else:
                     pausa("Mangi il gelato ed esci dalla gelateria", 1.0)
                     soldi = soldi - 2.50
-                    salva(soldi, foto)
+                    salva(soldi, foto, n_foto, indizio)
                     pausa("Ora hai %g euro." % soldi, 1.0)
                     invio(30)
                     loop = 0
@@ -472,7 +496,7 @@ def capitolo_1(): # non finito
                     break
                 else:
                     soldi =  soldi - 0.70
-                    salva(soldi, foto)
+                    salva(soldi, foto, n_foto, indizio)
                     
                     pausa("Hai comprato il giornale.", 1.0)
                     pausa("Ti rimangono %s euro." % soldi , 1.0)
@@ -835,7 +859,10 @@ def capitolo_1(): # non finito
                 break
 
             if opzione_12 == "2":
-                pass
+                pausa("Sei davanti alla statua.", 1.0)
+                pausa("E' dedicata ad uno scrittore morto da tempo.", 1.5)
+                if foto == 4:
+                    print "Scegli un'opzione\n[1] Scatta foto"
 
             if opzione_12 == "3":
                 pass
