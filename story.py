@@ -312,7 +312,7 @@ def capitolo_1(): # non finito
             if loop == 0:
                 pausa("Ti trovi in una piazza.", 1.3)
                 pausa("A nord c'e' una chiesa.", 1.3)
-                pausa("A sud c'e' una gelateria.", 1.0)
+                pausa("A sud c'e' un'edicola.", 1.0)
                 pausa("A est c'e' un viale.", 1.3)
                 pausa("A ovest c'e' un'altro viale.", 1.3)
                 invio(30)
@@ -329,7 +329,7 @@ def capitolo_1(): # non finito
                 invio(30)
             
             if opzione == "2": # finito
-                loop = "gelateria"
+                loop = 2
                 break
                 
             if opzione == "3": # finito
@@ -416,36 +416,6 @@ def capitolo_1(): # non finito
                 break
             
             if opzione_11 == "4":
-                menu()
-
-        while loop == 1: # finito
-
-            if loop == 1:
-
-                pausa("Sei entrato nel viale.", 1.0)
-                pausa("a est c'e' un' edicola.", 1.0)
-                pausa("a ovest c'e' un viale.",1.0)
-                invio(30)
-
-            print"scegli un'opzione\n[1] Vai a est\n[2] Vai a ovest\n[3] Vai al menu'"
-            separatore(30)
-
-            opzione_3 = ""
-
-            while opzione_3 != "1" and opzione_3 != "2" and opzione_3 != "3":
-                opzione_3 = raw_input(prompt)
-                opzione_3 = str(opzione_3)
-
-            separatore(30)
-
-            if opzione_3 == "1":
-                loop = 2
-                break
-
-            if opzione_3 == "2":
-                loop = 0
-
-            if opzione_3 == "3":
                 menu()
 
         while loop == 2: # finito
