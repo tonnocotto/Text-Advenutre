@@ -1,3 +1,4 @@
+#-*-coding: utf-8-*-
 import time
 import random
 import sys,time,os
@@ -42,12 +43,7 @@ def scelta():
     separatore(30)
     return opzione       
 def scambio():
-
-    if foto == 0:
-        loop = 0
-    else:
-        loop = 2
-
+    
     if foto == 1:
         obbiettivo = "una chiesa"
     if foto == 2:
@@ -56,7 +52,8 @@ def scambio():
         obbiettivo = "una fontana"
     if foto == 4:
         obbiettivo = "una statua dedicata ad uno scrittore"
-
+    if foto == 5:
+        obbiettivo = "una freccia"
 
     while loop == 0:
         if loop == 0:
@@ -140,6 +137,7 @@ def continua(numero, n):
         menu()       
 
 def salva(soldi, foto, n_foto, indizio):
+    
     try:
         with open("salvataggi.txt"):
             with open("salvataggi.txt ", "a") as score:
@@ -379,44 +377,6 @@ def capitolo_1(): # non finito
             if opzione == "4":
                 menu()
                 break
-
-        while loop == "gelateria": # finito
-            if loop == "gelateria":
-                pausa("Sei entrato nella gelateria.", 1.5)
-                pausa("Hai %g euro." % soldi, 1.5)
-                pausa("Un gelato costa 2.50 euro.", 1.5)
-                invio(30)
-
-            print "Lo vuoi comprare?\n[1]Si\n[2]No\n[3]Indietro\n[4]Menu'"
-            separatore(30)
-
-            opzione_11 = ""
-            while opzione_11 != "1" and opzione_11 != "2" and opzione_11 != "3" and opzione_11 != "4":
-                opzione_11 = str(raw_input(prompt))
-
-            if opzione_11 == "1":
-                if soldi < 2.50:
-                    pausa("Non hai abbastanza soldi.", 1.0)
-                    loop = 0
-                    invio(30)
-                    break
-                else:
-                    pausa("Mangi il gelato ed esci dalla gelateria", 1.0)
-                    soldi = soldi - 2.50
-                    salva(soldi, foto, n_foto, indizio)
-                    pausa("Ora hai %g euro." % soldi, 1.0)
-                    invio(30)
-                    loop = 0
-                    break
-
-            if opzione_11 == "2" or opzione_11 == "3":
-                pausa("Esci dalla gelateria.",1.0)
-                invio(30)
-                loop = 0
-                break
-            
-            if opzione_11 == "4":
-                menu()
 
         while loop == 2: # finito
             
@@ -821,7 +781,7 @@ def capitolo_1(): # non finito
                 pausa("Sei entrato nel viale.", 1.0)
                 pausa("A nord c'e' un viale.", 1.0)
                 pausa("A sud c'e' una statua.",1.0)
-                pausa("A est c'e' un supermercato.", 1.0)
+                pausa("A est c'e' un museo.", 1.0)
                 pausa("A ovest c'e' un viale", 1.0)
                 invio(30)
             
@@ -841,7 +801,7 @@ def capitolo_1(): # non finito
                         continue
 
             if opzione_12 == "3":
-                pass
+                loop = "museo"
 
             if opzione_12 == "4":
                 loop = 6
@@ -849,6 +809,39 @@ def capitolo_1(): # non finito
 
             if opzione_12 == "5":
                 menu()
+
+        while loop == "museo":
+            if loop == "museo":
+                pausa("Sei entrato nel museo.", 1.0)
+                pausa("A nord c'e' una freccia.", 1.5)
+                pausa("A sud c'e' l'uscita.", 1.0)
+                pausa("A est c'e' un'elmo.")
+                pausa("A ovest c'e' una stanza.")
+
+            scelta() = opzione_15
+            
+            if opzione_15 == "1":
+                pausa("Sei davantia alla freccia.", 1.0)
+                pausa("Questa freccia sembra essere vecchia qualche centinaio di anni.", 2.0)
+                if foto == 5:
+                    scatta()
+                    
+                    if scatta == "2":
+                        continue
+
+                invio(30)
+
+            if opzione_15 == "2":
+                loop = 11
+                break
+
+            if opzione_15 == "3":
+                pausa("Sei davanti all'elmo", 1.0)
+                invio(30)
+
+            if opzione_15 == "4":
+                pausa("Sei davanti allo scudo.", 1.0)
+                invio(30)
 
         while loop == 12:
             if loop == 12:
