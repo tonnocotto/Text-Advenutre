@@ -44,43 +44,99 @@ def scelta():
     return opzione       
 def scambio():
     
-    if foto == 1:
-        obbiettivo = "una chiesa"
-    if foto == 2:
-        obbiettivo = "una statua dedicata ai caduti in guerra"
-    if foto == 3:
-        obbiettivo = "una fontana"
-    if foto == 4:
-        obbiettivo = "una statua dedicata ad uno scrittore"
-    if foto == 5:
-        obbiettivo = "una freccia"
+    big_loop = 0
+    while big_loop == 0:
 
-    while loop == 0:
-        if loop == 0:
-            pausa("Parli con il signore sulla panchina.", 1.5)
-            pausa("Sembra una persona benestante", 1.0)
-            pausa("Dice che ha da qualche anno una grave malattia alle gambe e che ormai non puo' piu' utilizzarle.", 2.5)
-            pausa("Gli rimane sono un mese di vita.", 1.0)
-            pausa("Vorrebbe visitare la citta' in cui e' nato un'ultima volta prima di morire.", 2.5)
-            pausa("Ma dato che tutto cio' non e' possibile si accontenterebbe anche di delle foto.", 2.5)
-            pausa("Ti chiede se lo vuoi aiutare e scattare quelle foto per lui.", 2.0)
-
-        print "Scelgi un'opzione\n[1] Accetta l'incarico\n[2] Rifiuta\n[3] Indietro\n[4] Menu'"
-
-        opzione = ""
+        if foto == 0:
+            loop == 0:
+        else:
+            if n_foto != foto:
+                loop = 2
+            else:
+                loop = 3
         
-        while opzione != "1" and opzione != "2" and opzione != "3" and opzione != "4":
-            opzione = str(raw_input(prompt))
+        if foto == 1: # finito
+            obbiettivo = "una chiesa"
+        if foto == 2: # finito
+            obbiettivo = "una statua dedicata ai caduti in guerra"
+        if foto == 3: # finito
+            obbiettivo = "una fontana"
+        if foto == 4: # finito
+            obbiettivo = "una statua dedicata ad uno scrittore"
+        if foto == 5: # finito
+            obbiettivo = "una freccia"
 
-        if opzione == "1":
-            pausa("Ti dice che e' disposto a pagarti molto.", 1.0)
-            loop = 1
-            break
+        while loop == 0:
+            if loop == 0:
+                pausa("Parli con il signore sulla panchina.", 1.5)
+                pausa("Sembra una persona benestante", 1.0)
+                pausa("Dice che ha da qualche anno una grave malattia alle gambe e che ormai non puo' piu' utilizzarle.", 2.5)
+                pausa("Gli rimane sono un mese di vita.", 1.0)
+                pausa("Vorrebbe visitare la citta' in cui e' nato un'ultima volta prima di morire.", 2.5)
+                pausa("Ma dato che tutto cio' non e' possibile si accontenterebbe anche di delle foto.", 2.5)
+                pausa("Ti chiede se lo vuoi aiutare e scattare quelle foto per lui.", 2.0)
 
-    while loop == 1:
-        if loop == 1:
-            pausa("Vuole che gli porti una sola foto.", 1.5)
-            pausa("La foto deve essere quella di %s." % obbiettivo, 1.5)
+            print "Scelgi un'opzione\n[1] Accetta l'incarico\n[2] Rifiuta\n[3] Indietro\n[4] Menu'"
+
+            opzione = ""
+            
+            while opzione != "1" and opzione != "2" and opzione != "3" and opzione != "4":
+                opzione = str(raw_input(prompt))
+
+            if opzione == "1":
+                pausa("Ti dice che e' disposto a pagarti molto.", 1.0)
+                loop = 1
+                break
+
+            elif opzione == "2":
+                pausa("Hai rifiutato l'incarico.", 1.0)
+                invio(30)
+
+            elif opzione == "3":
+                invio(30)
+
+            else:
+                menu()
+
+        while loop == 1:
+            if foto = 0:
+                foto = 1
+                break
+
+            if loop == 1:
+                pausa("Vuole che gli porti una foto di %s." % obbiettivo, 1.5)
+                pausa("Ti ringrazia.", 1.0)
+                
+        while loop == 2:
+            if loop == 2:
+                pausa("Parli con il vecchio.", 1.0)
+
+            opzione_1 = ""
+
+            print "Scegli un'opzione:\n[1] Consegna foto\n[2] Indietro\n[3] Menu'"
+
+            while opzione_1 != "1" and "2" and "3":
+                opzione = raw_input(promt)
+                
+            if opzione_1 == "1":
+                loop = 3
+            
+            elif opzione_1 == "2":
+                invio(30)
+                capitolo_1(12)
+
+            else:
+                menu()
+        
+        while loop == 3:
+            if loop == 3:
+                if n_foto != 0:
+                    pausa("Consegni una foto.")
+                    pausa("Il vecchio ti paga 10 euro.")
+                    soldi += 10.0
+                    salva()
+                     
+                
 
     while loop == 2:
         if loop == 2:
@@ -93,7 +149,14 @@ def scambio():
             opzione_1 = raw_input(prompt)
 
         if opzione_1 == "1":
-            pausa("Consegni %s foto." % foto , 1.0)
+            s_foto = n_foto * 5.00
+            soldi +=  s_foto
+
+            salva(soldi, foto, n_foto, indizio)
+
+            pausa("Consegni %s foto." % n_foto , 1.0)
+            pausa("Il vecchio ti da %g euro per ogni foto." % s_foto, 1.2)
+            pausa("Ora hai %s euro." % soldi, 1.0)
 def scatta():
     loop = 0
     scatto = 1
@@ -292,10 +355,10 @@ def intro(): # non finito
     time.sleep(1.5)
     pausa("Non sai dove si trovi la via.", 1.0)
     continua(30, 1)
-def capitolo_1(): # non finito
+def capitolo_1(n_loop): # non finito
     global soldi
     cap = 1
-    loop = 0
+    loop = n_loop
     big_loop = 0
     indizio = 0
 
@@ -611,6 +674,11 @@ def capitolo_1(): # non finito
             if opzione_6 == "2":
                 pausa("Sei davanti alla statua.", 1.0)
                 pausa("La statua e' dedicata ai morti in guerra.", 1.0)
+                if foto == "2":
+                    scatta()
+
+                    if scatta == "2":
+                        continue
                 invio(30)
 
             if opzione_6 == "3":
@@ -667,7 +735,7 @@ def capitolo_1(): # non finito
                 pausa("A nord c'e' un negozio di scarpe.", 1.0)
                 pausa("A sud c'e' un cancello.", 1.0)
                 pausa("A est c'e'un viale.", 1.0)
-                pausa("A ovest c'e' un libreria.", 1.0)    
+                pausa("A ovest c'e' una fontana.", 1.0)    
                 invio(30)
 
             opzione_8 = scelta()
@@ -686,8 +754,13 @@ def capitolo_1(): # non finito
                 break
             
             if opzione_8 == "4":
-                pausa("Sei entrato in libreria.", 1.0)
-                pausa("Compri un libro e vai via.", 1.0)
+                pausa("Sei davanti alla fontana.", 1.0)
+                pausa("Ci sono tante monete nel fondo.", 1.0)
+                if foto == 3:
+                    scatta()
+
+                    if scatta == "2":
+                        continue
                 invio(30)
 
             if opzione_8 == "5":
@@ -799,6 +872,7 @@ def capitolo_1(): # non finito
 
                     if scatta == "2":
                         continue
+                invio(30)
 
             if opzione_12 == "3":
                 loop = "museo"
@@ -818,7 +892,7 @@ def capitolo_1(): # non finito
                 pausa("A est c'e' un'elmo.")
                 pausa("A ovest c'e' una stanza.")
 
-            scelta() = opzione_15
+            opzione_15 = scelta()
             
             if opzione_15 == "1":
                 pausa("Sei davantia alla freccia.", 1.0)
@@ -846,7 +920,7 @@ def capitolo_1(): # non finito
         while loop == 12:
             if loop == 12:
                 pausa("Sei entrato nel viale.", 1.0)
-                pausa("A nord c'e' un signore anziano seduto su una panchina.", 2.0)   
+                pausa("A nord c'e' un vecchio seduto su una panchina.", 2.0)
                 pausa("A sud c'e' un viale", 1.0)
 def capitolo_2(): # non finito
     animazione("Capitolo 2 - Primi ed ultimi ricordi", 0.1)
@@ -856,7 +930,7 @@ def capitolo_2(): # non finito
     indizio = 0
 
 leggi()
-
+ 
 while loop_1 == 0:
     if loop_1 != 0:
         break        
@@ -868,7 +942,7 @@ while loop_1 == 1:
 while loop_1 == 2:
     if loop_1 != 2:
         break
-    capitolo_1()
+    capitolo_1(0)
 while loop_1 == 3:
     if loop_1 != 3:
         break
