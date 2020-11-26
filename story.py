@@ -14,21 +14,27 @@ nome_gioco = "24:00"
 prompt = "> "
 indizio = 0
 casa = 0
+time_sleep = True
 
 def invio(numero):
     separatore(numero)
     raw_input("premi invio per continuare\n" + prompt)
     separatore(numero)
 def pausa(testo, tempo):
+    if time_sleep == False:
+        tempo = 0.0
+
     testo = str(testo)
     print testo
     tempo = float(tempo)
     time.sleep(tempo)
 def animazione(testo,tempo):
+    
     for char in testo:
         sys.stdout.write(char)
         sys.stdout.flush()
-        time.sleep(tempo)
+        if time_sleep == True:
+            time.sleep(tempo)
 
     print ""
 def separatore(numero):
@@ -210,15 +216,27 @@ def salva():
     
     try:
         with open("salvataggi.txt"):
-            with open("salvataggi.txt ", "w") as score:
+            with open("salvataggi.txt ", "a") as score:
+                if soldi != "":
+                    score.write("")
                 score.write(str(soldi))
+        
+                if foto != "":
+                    score.write("")
                 score.write(str(foto))
+                if n_foto != "":
+                    score.write("")
                 score.write(str(n_foto))
+                if indizio != "":
+                    score.write("")
                 score.write(str(indizio))
+                if time_sleep != "":
+                    score.write("")    
+                score.write(str(time_sleep))
 
     except IOError:
         with open("salvataggi.txt", "w") as score:
-            score.write(soldi,"\n", foto, "\n", n_foto, "\n", indizio)
+            score.write(soldi,"\n", foto, "\n", n_foto, "\n", indizio, "\n", time_sleep)
 def leggi():
 
     try:
@@ -227,6 +245,7 @@ def leggi():
         foto_1 = f.readline(2)
         n_foto_1 = f.readline(3)
         indizio_1 = f.readline(4)
+        time_sleep_1 = f.readline(5)
 
         if foto_1 == "":
             foto = 0
@@ -239,11 +258,16 @@ def leggi():
 
         elif indizio_1 == "":
             indizio = 0
+
+        if time_sleep_1 == "":
+            time_sleep = True
+
         else:
             soldi = float(soldi_1)
             foto = float(foto_1)
             n_foto = float(n_foto_1)
             indizio = float(indizio_1)
+            time_sleep = bool(time_sleep_1)
 
 
     except IOError:
@@ -251,11 +275,12 @@ def leggi():
         foto = 0
         indizio = 0
         n_foto = 0
+        time_sleep = True
     finally:
         f.close()
 
 def menu():
-    global loop_1
+    global loop_1, foto, time_sleep
     loop = 0 
     big_loop = 0
 
@@ -271,13 +296,13 @@ def menu():
             animazione("\n\tMenu'\n", 0.1)
             separatore(30) 
 
-            print "Scegli un'opzione\n[1] Gioca\n[2] Guida\n[3] Carica un capitolo\n[4] Statistiche"
+            print "Scegli un'opzione\n[1] Gioca\n[2] Guida\n[3] Carica un capitolo\n[4] Statistiche\n[5] Impostazioni"
             separatore(30)
 
             opzione = ""
 
-            while opzione != "1" and opzione != "2" and opzione != "3" and opzione != "4": #input validation  
-                opzione = str(raw_input(prompt))
+            while opzione != "1" and opzione != "2" and opzione != "3" and opzione != "4" and opzione != "5": #input validation  
+                opzione = raw_input(prompt)
 
             separatore(30)
 
@@ -296,12 +321,40 @@ def menu():
 
             if opzione == "4":
                 print "Statistiche\nSoldi: %s euro" % soldi
-                
-                if foto != 0:
-                    print "Foto: %s" % foto
+                print "Foto scattate:", foto
 
                 invio(30)
-                time.sleep(2.0)     
+                time.sleep(2.0)  
+
+            if opzione == "5":
+                loop = 2
+
+        while loop == 2:
+            print "Impostazioni\n[1] Time sleep: %s\n[2] Indietro" % str(time_sleep)
+
+            separatore(30)
+
+            opzione_2 = ""
+            while opzione_2 != "1" and opzione_2 != "2":
+                opzione_2 = raw_input(prompt)
+
+            separatore(30)
+
+            if opzione_2 == "1":
+                if time_sleep == True:
+                    time_sleep = False
+                else:
+                    time_sleep = True
+                
+                print "Time sleep scambiato in:", str(time_sleep)
+                separatore(30)
+
+                continue
+
+            if opzione_2 == "2":
+                loop = 0
+
+            salva()
 
         while loop == 1:
             if loop != 1:
@@ -370,7 +423,7 @@ def capitolo_1(n_loop): # non finito
     global soldi, indizio
     loop = n_loop
     big_loop = 0
-    
+
     separatore(30)
     animazione("\n\tCapitolo 1 - La casa\n", 0.1) # cambiare nome
     separatore(30)
