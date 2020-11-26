@@ -13,6 +13,7 @@ big_loop_1 = 0
 nome_gioco = "24:00"
 prompt = "> "
 indizio = 0
+casa = 0
 
 def invio(numero):
     separatore(numero)
@@ -129,7 +130,7 @@ def scambio():
             separatore(30)
             opzione_1 = ""
 
-            while opzione_1 != "1" and opzione != "2" and opzione != "3" and opzione != "4":
+            while opzione_1 != "1" and opzione_1 != "2" and opzione_1 != "3" and opzione_1 != "4":
                 opzione_1 = raw_input(prompt)
 
             separatore(30)
@@ -151,7 +152,7 @@ def scambio():
                 salva()
 
             elif opzione_1 == "2":
-                pausa("Chiedi al vecchio altre foto da scattare.")
+                pausa("Chiedi al vecchio altre foto da scattare.", 1.5)
                 loop = 1
                 break
 
@@ -365,21 +366,21 @@ def intro(): # non finito
     pausa("Non sai dove si trovi la via.", 1.0)
     continua(30, 1)
 def capitolo_1(n_loop): # non finito
+    
     global soldi, indizio
     loop = n_loop
     big_loop = 0
-
-
+    
+    separatore(30)
+    animazione("\n\tCapitolo 1 - La casa\n", 0.1) # cambiare nome
+    separatore(30)
 
     while big_loop == 0:
         
         while loop == 0: # finito
 
             if loop == 0:
-                separatore(30)
-                animazione("\n\tCapitolo 1 - La casa\n", 0.1) # cambiare nome
-                separatore(30)
-                
+
                 pausa("Ti trovi in una piazza.", 1.3)
                 pausa("A nord c'e' una chiesa.", 1.3)
                 pausa("A sud c'e' un'edicola.", 1.0)
@@ -644,7 +645,7 @@ def capitolo_1(n_loop): # non finito
             if opzione_13 == "1":
                 
                 if soldi < 8.00:
-                    pausa("Non hai abbastanza soldi.")
+                    pausa("Non hai abbastanza soldi.", 1.0)
                     loop = 5
                     invio(30)
                     break
@@ -790,7 +791,7 @@ def capitolo_1(n_loop): # non finito
 
             if opzione_9 == "1":
                 pausa("Ti affacci e vedi un viale normalissimo.", 1.0)
-                invio()
+                invio(30)
 
             if opzione_9 == "2":
                 pausa("La stazione e' chiusa", 1.0)
@@ -813,7 +814,7 @@ def capitolo_1(n_loop): # non finito
             if loop == 10:
                 animazione("Sei davanti a casa tua.", 0.1)
                 invio(30)
-            
+
             print "scegli un'opzione\n[1] Entra\n[2] Indietro\n[3] Vai al menu'"
             separatore(30)
 
@@ -823,34 +824,64 @@ def capitolo_1(n_loop): # non finito
                 opzione_10= str(raw_input(prompt))
 
             if opzione_10 == "1":
-                pausa("Prima di entrare leggi il nome e cognome scritti sul campanello.", 1.5)
+                if casa == 0:
+                    pausa("Per entrare paga 100 euro.", 1.0)
+                    pausa("Hai %s soldi." % soldi, 1.0)
 
-                global nome
+                    separatore(30)
+                    print "Scegli un'opzione\n[1] Paga\n[2] Indietro\n [3] Menu'"
+                    separatore(30)
+                    
+                    opzione_18 = ""
+                    while opzione_18 != "1" and "2" and "3":
+                        opzione_18 = raw_input(prompt)
 
-                nome = raw_input("A quanto pare ti chiami:\n" + prompt)
+                    if opzione_18 == "1":
+                        if soldi < 100:
+                            pausa("Non hai abbastanza soldi.", 1.0)
+                            invio(30)
+                            break
+                        else:
+                            pausa("Ora puoi entrare in casa.", 1.0)
+                            pausa("Ti rimangono %s euro." % soldi, 1.0)
+                            casa = 1
 
-                separatore(30)
-                animazione("FINE CAPITOLO 1", 0.1)
-                invio(30)
+                    if opzione_18 == "2":
+                        break
+                    
+                    if opzione_18 == "3":
+                        menu()
 
-                print "scegli un'opzione\n[1] Prossimo capitolo\n[2] Ripeti capitolo 1\n[3] Vai al menu'"
+                if casa == 1:
 
-                opzione_11 = ""
+                    pausa("Prima di entrare leggi il nome e cognome scritti sul campanello.", 1.5)
 
-                while opzione_11 != "1" and opzione_11 != "2" and opzione_11 != "3":
-                    opzione_11 = str(raw_input(prompt)) 
+                    global nome
 
-                if opzione_11 == "1":
-                    os.system('cls')
-                    big_loop = 1
-                    break
-                        
-                if opzione_11 == "2":
-                    loop = 0
-                    break
+                    nome = raw_input("A quanto pare ti chiami:\n" + prompt)
 
-                if opzione_11 == "3":
-                    menu()
+                    separatore(30)
+                    animazione("FINE CAPITOLO 1", 0.1)
+                    invio(30)
+
+                    print "scegli un'opzione\n[1] Prossimo capitolo\n[2] Ripeti capitolo 1\n[3] Vai al menu'"
+
+                    opzione_11 = ""
+
+                    while opzione_11 != "1" and opzione_11 != "2" and opzione_11 != "3":
+                        opzione_11 = str(raw_input(prompt)) 
+
+                    if opzione_11 == "1":
+                        os.system('cls')
+                        big_loop = 1
+                        break
+                            
+                    if opzione_11 == "2":
+                        loop = 0
+                        break
+
+                    if opzione_11 == "3":
+                        menu()
 
             if opzione_10 == "2":
                 loop = 9
@@ -899,8 +930,8 @@ def capitolo_1(n_loop): # non finito
                 pausa("Sei entrato nel museo.", 1.0)
                 pausa("A nord c'e' una freccia.", 1.5)
                 pausa("A sud c'e' l'uscita.", 1.0)
-                pausa("A est c'e' un'elmo.")
-                pausa("A ovest c'e' uno scudo.")
+                pausa("A est c'e' un'elmo.", 1.0)
+                pausa("A ovest c'e' uno scudo.", 1.0)
 
             opzione_15 = scelta()
             
@@ -980,16 +1011,16 @@ def capitolo_1(n_loop): # non finito
                     salva()
 
                     pausa("Compri il gelato.", 1.0)
-                    pausa("Ora hai %s euro." % soldi)
+                    pausa("Ora hai %s euro." % soldi, 1.0)
                 else:
-                    pausa("Non hai abbastanza soldi.")
+                    pausa("Non hai abbastanza soldi.", 1.0)
 
                 invio(30)
                 loop = 12
                 break
 
             if opzione_17 == "2":
-                pausa("Non compri il gelato")
+                pausa("Non compri il gelato", 1.0)
 
                 invio(30)
                 loop = 12
@@ -1003,7 +1034,8 @@ def capitolo_2(numero): # non finito
     big_loop = 0
 
 leggi()
-scambio()
+menu()
+#scambio()
 
 while loop_1 == 0:
     if loop_1 != 0:
@@ -1016,7 +1048,7 @@ while loop_1 == 1:
 while loop_1 == 2:
     if loop_1 != 2:
         break
-    capitolo_1(12)
+    capitolo_1(0)
 while loop_1 == 3:
     if loop_1 != 3:
         break
