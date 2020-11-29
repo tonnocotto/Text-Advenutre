@@ -9,6 +9,7 @@ foto = 0
 n_foto = 0
 loop_1 = 0
 soldi = 50.0
+frammento = 0
 big_loop_1 = 0
 nome_gioco = "24:00"
 prompt = "> "
@@ -88,6 +89,7 @@ def scambio():
                 pausa("Vorrebbe visitare la citta' in cui e' nato un'ultima volta prima di morire.", 2.5)
                 pausa("Ma dato che tutto cio' non e' possibile si accontenterebbe anche di delle foto.", 2.5)
                 pausa("Ti chiede se lo vuoi aiutare e scattare quelle foto per lui.", 2.0)
+                pausa("E' disposto a pagarti.", 1.0)
 
                 separatore(30)
 
@@ -102,7 +104,8 @@ def scambio():
             separatore(30)
 
             if opzione == "1":
-                pausa("Ti dice che e' disposto a pagarti molto.", 1.0)
+                pausa("Non ti paghera' in contanti.", 1.0)
+                pausa("Ti pagherà con dei frammenti di una foto.", 1.5)
                 loop = 1
                 break
 
@@ -142,12 +145,17 @@ def scambio():
             separatore(30)
 
             if opzione_1 == "1":
-                s_foto = float(n_foto * 5.00)
-                soldi += s_foto
+                frammento = n_foto
                 if n_foto != 0:
                     pausa("Consegni %s foto." % n_foto , 1.0)
-                    pausa("Il vecchio ti da %g euro per ogni foto." % s_foto, 1.2)
-                    pausa("Ora hai %s euro." % soldi, 1.0)
+
+                    if frammento != 1:
+                        pausa("Il vecchio ti da %g frammenti." % frammento, 1.2)
+                        pausa("Ora hai %s frammenti." % frammento, 1.0)
+                    else:
+                        pausa("Il vecchio ti da un frammento.", 1.0)
+                        pausa("Ora hai un frammento.", 1.0)
+                    
                 else:
                     pausa("Non hai foto da consegnare", 1.0)
                     invio(30)
@@ -216,36 +224,25 @@ def salva():
     
     try:
         with open("salvataggi.txt"):
-            with open("salvataggi.txt ", "a") as score:
-                if soldi != "":
-                    score.write("")
-                score.write(str(soldi))
-        
-                if foto != "":
-                    score.write("")
-                score.write(str(foto))
-                if n_foto != "":
-                    score.write("")
-                score.write(str(n_foto))
-                if indizio != "":
-                    score.write("")
-                score.write(str(indizio))
-                if time_sleep != "":
-                    score.write("")    
-                score.write(str(time_sleep))
+            with open("salvataggi.txt ", "w") as score:
+
+                score.writelines([str(soldi), "\n", str(foto), "\n", str(n_foto), "\n", str(indizio), "\n", str(time_sleep), "\n", str(frammento)])
 
     except IOError:
         with open("salvataggi.txt", "w") as score:
-            score.write(soldi,"\n", foto, "\n", n_foto, "\n", indizio, "\n", time_sleep)
-def leggi():
-
+            score.writelines([ str(soldi),"\n", str(foto), "\n", str(n_foto), "\n", str(indizio), "\n", str(time_sleep), "\n", str(frammento)])
+def leggi(): 
+    
     try:
+        
         f = open("salvataggi.txt", "r")
-        soldi_1 = f.readline(1)
-        foto_1 = f.readline(2)
-        n_foto_1 = f.readline(3)
-        indizio_1 = f.readline(4)
-        time_sleep_1 = f.readline(5)
+        print "soldi_1"
+        soldi_1 = f.readline()
+        foto_1 = f.readline()
+        n_foto_1 = f.readline()
+        indizio_1 = f.readline()
+        time_sleep_1 = f.readline()
+        frammento_1 = f.readline()
 
         if foto_1 == "":
             foto = 0
@@ -259,15 +256,19 @@ def leggi():
         elif indizio_1 == "":
             indizio = 0
 
-        if time_sleep_1 == "":
+        elif time_sleep_1 == "":
             time_sleep = True
+
+        elif frammento_1 == "":
+            frammento = 0
 
         else:
             soldi = float(soldi_1)
-            foto = float(foto_1)
-            n_foto = float(n_foto_1)
-            indizio = float(indizio_1)
+            foto = int(foto_1)
+            n_foto = int(n_foto_1)
+            indizio = int(indizio_1)
             time_sleep = bool(time_sleep_1)
+            frammento = int(frammento_1)
 
 
     except IOError:
@@ -276,6 +277,7 @@ def leggi():
         indizio = 0
         n_foto = 0
         time_sleep = True
+        frammento = 0
     finally:
         f.close()
 
@@ -425,7 +427,7 @@ def capitolo_1(n_loop): # non finito
     big_loop = 0
 
     separatore(30)
-    animazione("\n\tCapitolo 1 - La casa\n", 0.1) # cambiare nome
+    animazione("\n\tCapitolo 1 - Le foto\n", 0.1) # cambiare nome
     separatore(30)
 
     while big_loop == 0:
