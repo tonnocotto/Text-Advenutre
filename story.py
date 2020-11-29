@@ -16,6 +16,7 @@ prompt = "> "
 indizio = 0
 casa = 0
 time_sleep = True
+polaroid = False
 
 def invio(numero):
     separatore(numero)
@@ -226,11 +227,11 @@ def salva():
         with open("salvataggi.txt"):
             with open("salvataggi.txt ", "w") as score:
 
-                score.writelines([str(soldi), "\n", str(foto), "\n", str(n_foto), "\n", str(indizio), "\n", str(time_sleep), "\n", str(frammento)])
+                score.writelines([str(soldi), "\n", str(foto), "\n", str(n_foto), "\n", str(indizio), "\n", str(time_sleep), "\n", str(frammento), "\n", str(polaroid)])
 
     except IOError:
         with open("salvataggi.txt", "w") as score:
-            score.writelines([ str(soldi),"\n", str(foto), "\n", str(n_foto), "\n", str(indizio), "\n", str(time_sleep), "\n", str(frammento)])
+            score.writelines([ str(soldi),"\n", str(foto), "\n", str(n_foto), "\n", str(indizio), "\n", str(time_sleep), "\n", str(frammento), "\n", str(polaroid)])
 def leggi(): 
     
     try:
@@ -243,6 +244,7 @@ def leggi():
         indizio_1 = f.readline()
         time_sleep_1 = f.readline()
         frammento_1 = f.readline()
+        polaroid_1 = f.readline()
 
         if foto_1 == "":
             foto = 0
@@ -262,6 +264,9 @@ def leggi():
         elif frammento_1 == "":
             frammento = 0
 
+        elif polaroid_1 == "":
+            polaroid = False
+
         else:
             soldi = float(soldi_1)
             foto = int(foto_1)
@@ -269,6 +274,7 @@ def leggi():
             indizio = int(indizio_1)
             time_sleep = bool(time_sleep_1)
             frammento = int(frammento_1)
+            polaroid = bool(polaroid_1)
 
 
     except IOError:
@@ -798,7 +804,7 @@ def capitolo_1(n_loop): # non finito
 
             if loop == 8:
                 pausa("Sei entrato nel viale.", 1.0)
-                pausa("A nord c'e' un negozio di scarpe.", 1.0)
+                pausa("A nord c'e' un negozio di macchine fotografiche.", 1.0)
                 pausa("A sud c'e' un cancello.", 1.0)
                 pausa("A est c'e'un viale.", 1.0)
                 pausa("A ovest c'e' una fontana.", 1.0)    
@@ -807,9 +813,32 @@ def capitolo_1(n_loop): # non finito
             opzione_8 = scelta()
 
             if opzione_8 == "1":
-                pausa("Le scarpe che hai indosso sono tutte rovinate.", 1.0)
-                pausa("Ti compri delle scarpe nuove.", 1.0)
-                invio(30)
+                pausa("Entri nel negozio.", 1.0)
+                pausa("Una ploaroid dell'usato costa 20 euro.", 1.0)
+
+                separatore(30)
+                pausa("La vuoi comprare?\n[1] Si\n[2] No")
+                separatore(30)
+
+                opzione_19 = ""
+                while opzione_19 != "1" and opzione_19 != "2":
+                    opzione_19 = raw_input(prompt)
+
+                separatore(30)
+
+                if opzione_19 == "1":
+                    if soldi > 20.0:
+                        soldi = soldi - 20
+                        pausa("Compri la polaroid.", 1.0)
+                        pausa("Ora hai %s euro" % soldi, 1.0)
+                        polaroid = True
+                        salva()
+                        invio(30)
+                        continue
+                    else:
+                        pausa("Non hai abbastanza soldi.", 1.0)
+                        invio(30)
+                        continue
 
             if opzione_8 == "2":
                 pausa("Sei davanti al cancello.", 1.0)
