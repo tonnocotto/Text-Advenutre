@@ -14,9 +14,10 @@ big_loop_1 = 0
 nome_gioco = "24:00"
 prompt = "> "
 indizio = 0
-casa = 0
+chiave = 0
 time_sleep = True
 polaroid = False
+note = ""
 
 def invio(numero):
     separatore(numero)
@@ -52,7 +53,8 @@ def scelta():
 
     separatore(30)
     return opzione       
-def scambio():
+
+def pers_foto():
     global foto, n_foto, indizio, soldi
     loop = 0
     big_loop = 0
@@ -106,7 +108,7 @@ def scambio():
 
             if opzione == "1":
                 pausa("Non ti paghera' in contanti.", 1.0)
-                pausa("Ti pagherà con dei frammenti di una foto.", 1.5)
+                pausa("Ti pagherà con un frammento di una foto.", 1.5)
                 loop = 1
                 break
 
@@ -176,7 +178,135 @@ def scambio():
             
             else:
                 menu()
+def pers_chiave():
+    pausa("Parli con il barbone.", 1.0)
+    pausa("Dice di avere qualcosa per te.", 1.0)
+    pausa("Ma in cambio vuole una vecchia foto a cui e' particolarmente legato.", 2.0)
+    pausa("Dice che quella foto e' rubata e che probabilmente adesso e' strappata in pezzi.", 2.0)
+    pausa("Ti chiede se ce l'hai.", 1.0)
+
+    invio(30)
     
+    print "Scegli un'opzione:\n[1] Si\n[2] No\n[3] Indietro\n[4] Menu'"
+    separatore(30)
+
+    opzione = ""
+
+    while opzione != "1" and opzione != "2" and opzione != "3" and opzione != "4":
+        opzione = raw_input(prompt)
+        
+    separatore(30)
+
+    if opzione == "1":
+        pausa("Consegni la foto.", 1.0)
+        pausa("In cambio lui ti da' le chiavi di casa tua", 1.0)
+
+        invio(30)
+        capitolo_1(0)
+
+    if opzione == "2":
+        pausa("Rispondi di non averla mai vista.")
+        invio(30)
+        capitolo_1(13)
+
+    if opzione == "3":
+        invio(30)
+        capitolo_1(13)
+
+    if opzione == "4":
+        menu()
+
+def agenda():
+    
+    global note
+
+    loop = 0
+    big_loop = 0
+
+    separatore(30)
+    animazione("\n\tAgenda\n", 0.1)
+    separatore(30)
+
+    while big_loop == 0:
+
+        
+        while loop == 0:
+
+            print"Scegli un'opzione:\n[1] Sfide\n[2] Note\n[3] Indizi\n[4] Indietro"
+            separatore(30)
+
+            opzione = ""
+            while opzione != "1" and opzione != "2" and opzione != "3" and opzione != "4":
+                opzione = raw_input(prompt)
+            separatore(30)
+
+            if opzione == "1":
+                loop = 1
+                break
+
+            if opzione == "2":
+                loop = 2
+                invio(30)
+                break
+
+            if opzione == "3":
+                menu()
+            
+        while loop == 1:
+
+            print "Sfide:"
+
+            if foto != 0 and foto != 6:
+                print "Scatta foto per il vecchio:", foto, "\\6"
+            elif foto == "6":
+                print "Scatta foto per il vecchio: Completato"
+
+            invio(30)
+            loop = 0
+            break
+
+        while loop == 2:
+            print "Note:"
+
+            if note != "":
+                print note 
+
+            invio(30)
+            print "scegli un'opzione:\n[1] Aggiungi nota\n[2] Modifica note\n[3] Indietro"
+
+            separatore(30)
+  
+            opzione_1 = ""
+
+            while opzione_1 != "1" and opzione_1 != "2":
+                opzione_1 = raw_input(prompt)
+
+            separatore(30)
+
+            if opzione_1 == "1" or opzione_1 == "2":
+                print "Inserisci il testo da aggiungere\n(per andare a capo scrivi \"0\" e poi premi invio, per tornare indietro scrivi \"1\" e poi premi invio)"
+                separatore(30)
+
+                if opzione_1 == "2":
+                    note = ""
+
+                while note_1 != "1":
+                    
+                    note_1 = raw_input(propt)
+
+                    while note_1 == "0":
+                        note += "\n"
+                        note += raw_input(prompt)
+
+                    note += note_1
+
+                salva()
+                invio(30)
+
+            if opzione_1 == "3":
+                loop = 0
+                break
+                invio(30)
 def scatta():
     loop = 0
     scatto = 1
@@ -227,17 +357,16 @@ def salva():
         with open("salvataggi.txt"):
             with open("salvataggi.txt ", "w") as score:
 
-                score.writelines([str(soldi), "\n", str(foto), "\n", str(n_foto), "\n", str(indizio), "\n", str(time_sleep), "\n", str(frammento), "\n", str(polaroid)])
+                score.writelines([str(soldi), "\n", str(foto), "\n", str(n_foto), "\n", str(indizio), "\n", str(time_sleep), "\n", str(frammento), "\n", str(polaroid), "\n", str(note)])
 
     except IOError:
         with open("salvataggi.txt", "w") as score:
-            score.writelines([ str(soldi),"\n", str(foto), "\n", str(n_foto), "\n", str(indizio), "\n", str(time_sleep), "\n", str(frammento), "\n", str(polaroid)])
+            score.writelines([ str(soldi),"\n", str(foto), "\n", str(n_foto), "\n", str(indizio), "\n", str(time_sleep), "\n", str(frammento), "\n", str(polaroid), "\n", str(note)])
 def leggi(): 
     
     try:
         
         f = open("salvataggi.txt", "r")
-        print "soldi_1"
         soldi_1 = f.readline()
         foto_1 = f.readline()
         n_foto_1 = f.readline()
@@ -245,6 +374,7 @@ def leggi():
         time_sleep_1 = f.readline()
         frammento_1 = f.readline()
         polaroid_1 = f.readline()
+        note_1 = f.readline()
 
         if foto_1 == "":
             foto = 0
@@ -275,6 +405,7 @@ def leggi():
             time_sleep = bool(time_sleep_1)
             frammento = int(frammento_1)
             polaroid = bool(polaroid_1)
+            note = str(note_1)
 
 
     except IOError:
@@ -284,6 +415,7 @@ def leggi():
         n_foto = 0
         time_sleep = True
         frammento = 0
+        note = ""
     finally:
         f.close()
 
@@ -329,21 +461,25 @@ def menu():
 
             if opzione == "4":
                 print "Statistiche\nSoldi: %s euro" % soldi
-                print "Foto scattate:", foto
+
+                if foto != 0:
+                    print "Frammenti: ", frammento
+
+                time.sleep(2.0)  
 
                 invio(30)
-                time.sleep(2.0)  
+                
 
             if opzione == "5":
                 loop = 2
 
         while loop == 2:
-            print "Impostazioni\n[1] Time sleep: %s\n[2] Indietro" % str(time_sleep)
+            print "Impostazioni\n[1] Time sleep: %s\n[2] Resetta salvataggi\n[3] Indietro" % str(time_sleep)
 
             separatore(30)
 
             opzione_2 = ""
-            while opzione_2 != "1" and opzione_2 != "2":
+            while opzione_2 != "1" and opzione_2 != "2" and opzione_2 != "3":
                 opzione_2 = raw_input(prompt)
 
             separatore(30)
@@ -360,8 +496,35 @@ def menu():
                 continue
 
             if opzione_2 == "2":
-                loop = 0
+                print "Sei sicuro di voler resettare tutti i salvataggi?\n[1] Si, sono sicuro\n[2] No"
+                separatore(30)
 
+                opzione_3 = ""
+
+                while opzione_3 != "1" and opzione_3 != "2":
+                    opzione_3 = raw_input(prompt)
+
+                if opzione_3 == "1":
+                    f = open("salvataggi.txt", "w")
+                    f.write("")
+                    f.close()
+                    pausa("cancellazione salvataggi in corso:", 1.0)
+                    animazione("----------", 0.2)
+
+                    leggi()
+                    salva()
+
+                    pausa("salvataggi cancellati", 1.0)
+                    invio(30)
+                    continue
+
+                if opzione_3 == "2":
+                    invio(30)
+                    continue
+                 
+
+            if opzione_2 == "3":
+                loop = 0
             salva()
 
         while loop == 1:
@@ -664,7 +827,7 @@ def capitolo_1(n_loop): # non finito
                 pausa("A nord c'e' un viale.", 1.0)
                 pausa("A sud in ristorante", 1.0)
                 pausa("A est c'e' un viale.", 1.0)
-                pausa("A ovest c'e' un negozio di viestiti.", 1.0)
+                pausa("A ovest c'e' un barbone.", 1.0)
                 invio(30)
                 opzione_5 = scelta()
 
@@ -681,47 +844,17 @@ def capitolo_1(n_loop): # non finito
                 break
 
             if opzione_5 == "4":
-                loop = "vestiti"
+                pausa("Parli con il barbone.", 1.0)
+                pausa("Ha un'aria familiare.", 1.0)
+                pausa("Dice di conoscere cosi' tanto bene la citta'\n di essere in grado di trovare qualsiasi oggetto smarrito.")
+                pausa("Tranne nel caso in cui l'oggetto e' stato rubato")
+                pausa("In cambio vuole 6 frammenti di una vecchia foto a cui e' molto affezionato.", 1.0)
+                pausa("Quella foto gli e' stata sottratta e strappata in piu' frammenti da delle persone.", 1.0)
                 invio(30)
 
             if opzione_5 == "5":
                 big_loop = 1
                 menu()
-                break
-
-        while loop == "vestiti": # finito
-            if loop == "vestiti":
-                pausa("Sei entrato nel negozio di vestiti.", 1.0)
-                pausa("Hai %s euro." % soldi, 0.5)
-                pausa("Una maglietta costa 8.00 euro.", 1.0)
-                invio(30)
-
-            print "La vuoi comprare?\n[1] Si\n[2] No\n[3] Indietro\n[4] Menu'"
-
-            opzione_13 = ""
-        
-            while opzione_13 != "1" and opzione_13 != "2" and opzione_13 != "3" and opzione_13 != "4":
-                opzione_13 = str(raw_input(prompt))
-            
-            if opzione_13 == "1":
-                
-                if soldi < 8.00:
-                    pausa("Non hai abbastanza soldi.", 1.0)
-                    loop = 5
-                    invio(30)
-                    break
-                else:
-                    soldi = soldi - 8.00
-                    pausa("Hai comprato una maglietta.", 1.0)
-                    pausa("Ora hai %s euro" % soldi , 1.0)
-                    loop = 5
-                    invio(30)
-                    salva()
-                    break
-
-            if opzione_13 == "2" or opzione_13 == "3":
-                loop = 5
-                invio(30)
                 break
 
             if opzione_13 == "4":
@@ -813,11 +946,12 @@ def capitolo_1(n_loop): # non finito
             opzione_8 = scelta()
 
             if opzione_8 == "1":
+
                 pausa("Entri nel negozio.", 1.0)
                 pausa("Una ploaroid dell'usato costa 20 euro.", 1.0)
 
                 separatore(30)
-                pausa("La vuoi comprare?\n[1] Si\n[2] No")
+                print"La vuoi comprare?\n[1] Si\n[2] No\n[3] Menu'"
                 separatore(30)
 
                 opzione_19 = ""
@@ -833,13 +967,16 @@ def capitolo_1(n_loop): # non finito
                         pausa("Ora hai %s euro" % soldi, 1.0)
                         polaroid = True
                         salva()
-                        invio(30)
-                        continue
                     else:
                         pausa("Non hai abbastanza soldi.", 1.0)
-                        invio(30)
-                        continue
 
+                invio(30)
+                continue
+
+                if opzione_19 == "3":
+                    menu()
+
+                
             if opzione_8 == "2":
                 pausa("Sei davanti al cancello.", 1.0)
                 pausa("Ti affacci e vedi una casa", 1.0)
@@ -908,37 +1045,16 @@ def capitolo_1(n_loop): # non finito
                 opzione_10= str(raw_input(prompt))
 
             if opzione_10 == "1":
-                if casa == 0:
-                    pausa("Per entrare paga 100 euro.", 1.0)
-                    pausa("Hai %s soldi." % soldi, 1.0)
+                if chiave == 0:
+                    pausa("La porta e' chiusa a chiave.", 1.0)
+                    pausa("Non hai le chiavi di casa e in questa citta' non c'e' un ferramenta in grado di aprire la porta.", 2.5)
+                    pausa("L'unica opzione sarebbe quella di ritrovare le chiavi di casa")
+                    invio(30)
+                    continue
 
-                    separatore(30)
-                    print "Scegli un'opzione\n[1] Paga\n[2] Indietro\n [3] Menu'"
-                    separatore(30)
-                    
-                    opzione_18 = ""
-                    while opzione_18 != "1" and "2" and "3":
-                        opzione_18 = raw_input(prompt)
-
-                    if opzione_18 == "1":
-                        if soldi < 100:
-                            pausa("Non hai abbastanza soldi.", 1.0)
-                            invio(30)
-                            break
-                        else:
-                            pausa("Ora puoi entrare in casa.", 1.0)
-                            pausa("Ti rimangono %s euro." % soldi, 1.0)
-                            casa = 1
-
-                    if opzione_18 == "2":
-                        break
-                    
-                    if opzione_18 == "3":
-                        menu()
-
-                if casa == 1:
-
-                    pausa("Prima di entrare leggi il nome e cognome scritti sul campanello.", 1.5)
+                if chiave == 1:
+                    pausa("Apri la porta con le chiavi che avevi con te.", 1.5)
+                    pausa("Aprendo la porta leggi il nome scritto sul campanello.", 1.5)
 
                     global nome
 
@@ -1059,7 +1175,7 @@ def capitolo_1(n_loop): # non finito
             opzione_16 = scelta()
 
             if opzione_16 == "1":
-                scambio()
+                persona_foto()
 
             elif opzione_16 == "2":
                 loop == 11
@@ -1110,16 +1226,55 @@ def capitolo_1(n_loop): # non finito
                 loop = 12
                 break
 
-            else:
-                menu()         
+            if opzione_17 == "3":
+                menu()  
+
+        while loop == 13:
+            if loop == 13:
+                pausa("Sei entrato nel viale.", 1.0)
+
+                if frammento != 6:
+                    pausa("Il viale e' vuoto.", 1.0)
+                    invio(30)
+                    loop = 0
+                    break
+                else:
+                    pausa("A est c'e' un barbone.")
+                    pausa("A ovest c'e' un viale.")
+
+                invio(30)
+
+            print "Scegli un'opzione:\n[1] Vai a est\n[2] Vai a ovest\n[3] Menu'"
+
+            opzione_20 = ""
+
+            while opzione_20 != "1" and opzione_20 != "2" and opzione_20 != "3":
+                opzione_20 = raw_input(prompt)
+
+            if opzione_20 == "1":
+                pers_chiave()
+
+            if opzione_20 == "2":
+
+                invio(30)
+                loop = 0
+                break
+
+            if opzione_20 == "3":
+
+                menu()
+
+       
 def capitolo_2(numero): # non finito
     animazione("Capitolo 2 - Primi ed ultimi ricordi", 0.1)
     Loop = numero
     big_loop = 0
 
+
+
 leggi()
+agenda()
 menu()
-#scambio()
 
 while loop_1 == 0:
     if loop_1 != 0:
