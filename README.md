@@ -1,9 +1,7 @@
-Text adventure
-> main
-   
-   main.py
-> cap_1
+**\main**
+    
+_[main.py](https://github.com/tonnocotto/Text-Advenutre/blob/main/main/main.py)_
 
-  cap_1.py
-  salvataggi
-  master_mind.py
+_[note.txt](https://github.com/tonnocotto/Text-Advenutre/blob/main/main/note.txt)_
+
+_[salvataggi_main.txt](https://github.com/tonnocotto/Text-Advenutre/blob/main/main/salvataggi_main.txt)_
